@@ -3,9 +3,11 @@ import { Box, Typography, Button, Grid, Card, CardContent, Breadcrumbs, Link, Ra
 import { Home as HomeIcon } from '@mui/icons-material';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useLocation } from 'react-router-dom';
+import { useUser } from '../../context/UserContext';
 
 
 const ProductPage = () => {
+    const { addToCart } = useUser();
     const location = useLocation();
     const product = location.state.product;
 
@@ -100,7 +102,7 @@ const ProductPage = () => {
                                     {product.reviews.length} Reviews
                                 </Typography>
                             </Box>
-                            <Button sx={{ py: 2, bgcolor: 'ButtonFace' }} variant="outlined" color="error" fullWidth>
+                            <Button onClick={() => addToCart(product)} sx={{ py: 2, bgcolor: 'ButtonFace' }} variant="outlined" color="error" fullWidth>
                                 Add to Cart
                             </Button>
                         </CardContent>

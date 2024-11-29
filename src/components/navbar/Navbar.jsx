@@ -14,6 +14,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, useNavigate } from 'react-router-dom';
+import Login from '../../pages/auth/Login';
+import { useUser } from '../../context/UserContext';
 
 const pages = [
     { label: 'Shop', path: '/shop' },
@@ -22,13 +24,16 @@ const pages = [
 ];
 
 function Navbar() {
+    const [isLoginOpen, setIsLoginOpen] = React.useState(false);
+
     const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-    const token = localStorage.getItem('token'); 
-    const username = localStorage.getItem('username'); 
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || []; 
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
+
+    const { totalCartItems } = useUser()
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -53,7 +58,7 @@ function Navbar() {
     };
 
     return (
-        <AppBar sx={{ backgroundColor: '#000000', position: 'fixed' }} position="static">
+        <AppBar sx={{ backgroundColor: '#000000', position: 'fixed',zIndex: 50, }} position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     {/* Logo */}
@@ -126,14 +131,12 @@ function Navbar() {
 
                     {/* Cart Icon */}
                     <Box sx={{ flexGrow: 0, mr: 2 }}>
-                        <IconButton size="large" color="inherit">
-                            <Badge badgeContent={cartItems.length} color="error">
+                        <IconButton size="large" color="inherit" onClick={() => navigate('/cart')}>
+                            <Badge badgeContent={totalCartItems} color="error">
                                 <ShoppingCartIcon />
                             </Badge>
                         </IconButton>
                     </Box>
-
-                    {/* User Section */}
                     {token ? (
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
@@ -166,12 +169,13 @@ function Navbar() {
                             </Menu>
                         </Box>
                     ) : (
-                        <Button color="inherit" onClick={() => navigate('/login')}>
+                        <Button color="inherit" onClick={() => setIsLoginOpen(true)}>
                             Login
                         </Button>
                     )}
                 </Toolbar>
             </Container>
+            <Login isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
         </AppBar>
     );
 }
