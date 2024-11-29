@@ -1,19 +1,25 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { productList } from "../assets/productList";
-
+import { bannerData } from "../assets/bannerData";
 
 const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
-    const [newProducts, setNewProducts] = useState(
-        productList.filter((product) => product.year === new Date().getFullYear())
-    );
-    const [popularProducts, setPopularProducts] = useState(
-        productList.filter((product) => product.ratings >= 4.5)
-    );
+
+    const [allProducts, setAllProducts] = useState(productList);
+    const [newProducts, setNewProducts] = useState();
+    const [popularProducts, setPopularProducts] = useState();
+    const [banners, setBanners] = useState(bannerData)
+
+    useEffect(() => {
+        const filteredNewProducts = productList.filter(product => product.year === 2024);
+        const filteredPopularProducts = productList.filter(product => product.ratings >= 4.6)
+        setNewProducts(filteredNewProducts);
+        setPopularProducts(filteredPopularProducts)
+    }, [productList])
 
     return (
-        <ProductContext.Provider value={{ newProducts, popularProducts }}>
+        <ProductContext.Provider value={{ allProducts, newProducts, popularProducts, banners }}>
             {children}
         </ProductContext.Provider>
     );
