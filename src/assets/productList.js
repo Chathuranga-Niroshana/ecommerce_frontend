@@ -30,7 +30,7 @@ export const productList = [
             "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080"
         ],
         category: "mobile phone",
-        description: "Apple iPhone 13 with A15 Bionic chip and advanced dual-camera system.",
+        description: `Apple iPhone 13 with A15 Bionic chip and advanced dual-camera system.this was the best year of iphone i say. you want a midranger: get the regular 13, want a budget: get the 13 mini, want a flagship: get the 13 pro, want a big flagship: get the 13 pro max. reliable phones with good specs`,
         condition: "Brand New",
         brand: "Apple",
         model: "iPhone 13",

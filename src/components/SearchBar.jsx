@@ -16,9 +16,10 @@ const SearchBar = () => {
 
     const handleSearch = () => {
         if (searchQuery.trim()) {
-            navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
+            navigate(`/shop?query=${encodeURIComponent(searchQuery)}`);
         }
     };
+
 
     return (
         <div className="w-full flex items-center justify-center my-6">
