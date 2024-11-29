@@ -151,18 +151,6 @@ const Home = () => {
             <div className="flex w-full flex-col  items-center md:flex-row justify-between px-8 md:px-20 pt-12">
                 {/* Banner Image */}
                 <motion.div
-                    initial={{ x: 100, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 1 }}
-                    className="md:w-1/2 flex justify-center"
-                >
-                    <img
-                        src={computerImg}
-                        alt="banner"
-                        className="w-2/3 md:w- rounded-lg shadow-lg"
-                    />
-                </motion.div>
-                <motion.div
                     initial={{ x: -100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 1 }}
@@ -175,6 +163,18 @@ const Home = () => {
                         We are a leading e-commerce platform offering the latest and most reliable tech products.
                         Our mission is to bring cutting-edge technology to your doorstep with exceptional customer service.
                     </p>
+                </motion.div>
+                <motion.div
+                    initial={{ x: 100, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 1 }}
+                    className="md:w-1/2 flex justify-center"
+                >
+                    <img
+                        src={computerImg}
+                        alt="banner"
+                        className="w-2/3 md:w- rounded-lg shadow-lg"
+                    />
                 </motion.div>
             </div>
 
