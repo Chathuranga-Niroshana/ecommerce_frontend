@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import bannerImg from '../../assets/images/mobilePhone.png';
 import computerImg from '../../assets/images/computer.png'
 import { Button, Grid } from '@mui/material';
@@ -12,7 +12,20 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 const Home = () => {
     const { newProducts, popularProducts } = useProducts();
     const [currentIndex, setCurrentIndex] = useState(0);
-    const displayedNewProducts = newProducts.slice(0, 4);;
+    const displayedNewProducts = newProducts.slice(0, 4);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    // Track window resize to update the screen width
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+
 
     // Move to the next 4 items, looping around
     const nextItem = () => {
@@ -49,7 +62,7 @@ const Home = () => {
     return (
         <div className="w-full mb-20  text-white">
             {/* Hero Section */}
-            <div className="flex w-full md:flex-row flex-col justify-between px-8 md:px-20 pt-12">
+            <div className="flex w-full md:mb-0 mb-10 md:flex-row flex-col justify-between px-8 md:px-20 pt-12">
                 {/* Banner Image */}
                 <motion.div
                     initial={{ x: 100, opacity: 0 }}
@@ -67,19 +80,19 @@ const Home = () => {
                     initial={{ x: -100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 1 }}
-                    className="md:w-1/2 flex flex-col gap-6 "
+                    className="md:w-1/2 flex flex-col md:gap-6 "
                 >
                     <h1 className="text-4xl md:text-8xl font-bold leading-loose">
                         Upgrade Your
                     </h1>
-                    <h1 className="text-4xl mt-4 md:text-8xl font-bold leading-loose">
+                    <h1 className="text-4xl mt-0 md:mt-4 md:text-8xl font-bold leading-loose">
                         Tech Life
                     </h1>
-                    <p className="text-lg text-neutral-400">
+                    <p className="text-lg text-neutral-400 md:mb-20">
                         Explore the latest mobile phones and computers with unbeatable prices and quality.
                     </p>
                     <Button
-                        sx={{ mt: 20, ml: 'auto' }}
+                        sx={{ ml: 'auto' }}
                         variant="contained"
                         size="large"
                         className=" bg-gradient-to-r from-blue-500 to-red-700 hover:from-pink-900 hover:to-purple-800 text-white px-8 py-3 text-lg  rounded-full shadow-md transition-transform transform hover:scale-105"
@@ -119,7 +132,7 @@ const Home = () => {
             <div className=' flex flex-col justify-center items-center   mt-10'>
                 <div className="flex flex-col justify-center items-center  py-5 rounded-md ">
                     <h1 className="text-3xl font-bold text-neutral-300 mb-6">Our Popular Products</h1>
-                    <p className='text-sm text-neutral-400 text-center md:px-56 font-normal mb-10'>
+                    <p className='text-sm text-neutral-400 text-center px-5 md:px-56 font-normal mb-10'>
                         Discover our top-selling products that our customers love. From innovative gadgets to everyday essentials,
                         each item is carefully selected to offer the best in quality and value. Browse through our collection
                         and find the perfect products to meet your needs.
@@ -128,15 +141,14 @@ const Home = () => {
                         <button className='bg-white p-4 rounded-full shadow-2xl -mr-4 z-50' onClick={prevItem}>
                             <ArrowBackIosNewIcon className='text-black' />
                         </button>
-                        <div className="grid grid-cols-4 grid-rows-1 gap-2">
-                            {displayedItems?.map((product) => (
-                                <Grid
-                                    key={product.id}
-                                    product
-                                >
-                                    <ProductCard product={product} />
-                                </Grid>
-                            ))}
+                        <div className={`grid grid-cols-1 ${!isMobile ? 'md:grid-cols-4' : ''} grid-rows-1 gap-2`}>
+                            {displayedItems
+                                ?.slice(0, isMobile ? 1 : 4)
+                                .map((product) => (
+                                    <Grid key={product.id}>
+                                        <ProductCard product={product} />
+                                    </Grid>
+                                ))}
                         </div>
                         <button className='bg-white p-4 rounded-full shadow-2xl -ml-4 z-50' onClick={nextItem}>
                             <ArrowForwardIosIcon className='text-black' />
@@ -195,7 +207,18 @@ const Home = () => {
                             </motion.div>
                         ))}
                     </motion.div>
-                    <Button sx={{ width: '250px', alignSelf: 'center', mt: 3, py: 3, fontSize: 24, mx: 'auto' }} variant="outlined" color="error">
+                    <Button
+                        sx={{
+                            width: { xs: '100%', md: '250px' }, // Small width for mobile, larger for desktop
+                            alignSelf: 'center',
+                            mt: 3,
+                            py: { xs: 2, md: 3 },
+                            fontSize: { xs: 16, md: 24 },
+                            mx: 'auto',
+                        }}
+                        variant="outlined"
+                        color="error"
+                    >
                         Explore more
                     </Button>
                 </div>
