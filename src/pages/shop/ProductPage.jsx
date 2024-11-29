@@ -148,6 +148,47 @@ const ProductPage = () => {
                 </Grid>
             </Box>
 
+            <Box sx={{ my: 4, backgroundColor: '#42424233', p: 2 }}>
+                <Typography variant="h6" sx={{ mb: 2, color: '#FFFFFF' }}>
+                    Add Your Review
+                </Typography>
+                <Box component="form" >
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+
+                            <Rating
+                                name="user-rating"
+                                value={rating}
+                                onChange={(e, newValue) => setRating(newValue)}
+                                size="large"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                label="Write a review"
+                                multiline
+                                rows={4}
+                                value={review}
+                                onChange={(e) => setReview(e.target.value)}
+                                variant="outlined"
+                                sx={{ backgroundColor: '#DDD33333', }}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={handleAddReview}
+                            // disabled={!review.trim() || rating === 0}
+                            >
+                                Submit Review
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Box>
+
 
         </div >
     );
