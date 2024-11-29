@@ -4,7 +4,7 @@ import computerImg from '../../assets/images/computer.png'
 import { Button, Grid } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useProducts } from '../../context/ProductContext';
-import ProductCard from '../../components/navbar/ProductCard';
+import ProductCard from '../../components/ProductCard';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
