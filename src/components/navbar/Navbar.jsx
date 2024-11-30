@@ -15,7 +15,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, useNavigate } from 'react-router-dom';
 import Login from '../../pages/auth/Login';
-import { useUser } from '../../context/UserContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectTotalCartItems, } from '../../app/features/cartSlice';
+import { logout, getUser, getIsLoggedIn, } from '../../app/features/authSlice';
 
 const pages = [
     { label: 'Shop', path: '/shop' },
@@ -25,43 +27,30 @@ const pages = [
 
 function Navbar() {
     const [isLoginOpen, setIsLoginOpen] = React.useState(false);
-
-    const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-    const token = localStorage.getItem('token');
-    const username = localStorage.getItem('username');
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const { totalCartItems } = useUser()
+    const totalCartItems = useSelector(selectTotalCartItems);
+    const user = useSelector(getUser);
+    const isLoggedIn = useSelector(getIsLoggedIn);
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
+    const handleNavMenu = (event) => setAnchorElNav(event?.currentTarget || null);
+    const handleUserMenu = (event) => setAnchorElUser(event?.currentTarget || null);
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
+        dispatch(logout());
         navigate('/');
     };
 
+    const avatarFallback = user?.name ? user.name.charAt(0).toUpperCase() : '?';
+
     return (
-        <AppBar sx={{ backgroundColor: '#000000', position: 'fixed',zIndex: 50, }} position="static">
+        <AppBar sx={{ backgroundColor: '#000', position: 'fixed', zIndex: 50 }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    {/* Logo */}
                     <Link to="/">
                         <Typography
                             variant="h6"
@@ -80,32 +69,20 @@ function Navbar() {
                         </Typography>
                     </Link>
 
-                    {/* Menu for small screens */}
+                    {/* Mobile Menu */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
                             aria-label="menu"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
+                            onClick={(e) => handleNavMenu(e)}
                             color="inherit"
                         >
                             <MenuIcon />
                         </IconButton>
                         <Menu
-                            id="menu-appbar"
                             anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
                             open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
+                            onClose={() => handleNavMenu(null)}
                             sx={{ display: { xs: 'block', md: 'none' } }}
                         >
                             {pages.map((page) => (
@@ -129,39 +106,29 @@ function Navbar() {
                         ))}
                     </Box>
 
-                    {/* Cart Icon */}
-                    <Box sx={{ flexGrow: 0, mr: 2 }}>
-                        <IconButton size="large" color="inherit" onClick={() => navigate('/cart')}>
-                            <Badge badgeContent={totalCartItems} color="error">
-                                <ShoppingCartIcon />
-                            </Badge>
-                        </IconButton>
-                    </Box>
-                    {token ? (
-                        <Box sx={{ flexGrow: 0 }}>
+                    {/* Cart */}
+                    <IconButton size="large" color="inherit" onClick={() => navigate('/cart')}>
+                        <Badge badgeContent={totalCartItems} color="error">
+                            <ShoppingCartIcon />
+                        </Badge>
+                    </IconButton>
+
+                    {/* User */}
+                    {isLoggedIn ? (
+                        <Box>
                             <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt={username} src="/static/images/avatar/2.jpg" />
+                                <IconButton onClick={(e) => handleUserMenu(e)} sx={{ p: 0 }}>
+                                    <Avatar>{avatarFallback}</Avatar>
                                 </IconButton>
                             </Tooltip>
                             <Menu
-                                sx={{ mt: '45px' }}
-                                id="menu-appbar"
                                 anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
                                 open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
+                                onClose={() => handleUserMenu(null)}
+                                sx={{ mt: '45px' }}
                             >
-                                <MenuItem onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{username}</Typography>
+                                <MenuItem onClick={() => handleUserMenu(null)}>
+                                    <Typography textAlign="center">{user?.name}</Typography>
                                 </MenuItem>
                                 <MenuItem onClick={handleLogout}>
                                     <Typography textAlign="center">Logout</Typography>
@@ -179,5 +146,4 @@ function Navbar() {
         </AppBar>
     );
 }
-
 export default Navbar;

@@ -1,29 +1,57 @@
 import React, { useState } from 'react';
-import { Button, Dialog, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
+import { Alert, Button, Dialog, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
-import welcomeImg from '../../assets/images/welcomeImg.png'
-import { useUser } from '../../context/UserContext';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import welcomeImg from '../../assets/images/welcomeImg.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { register, login, clearAlert } from '../../app/features/authSlice';
+import Snackbar from '@mui/material/Snackbar';
+
 
 const Login = ({ isOpen, onClose }) => {
     const [isRegister, setIsRegister] = useState(false);
+    const dispatch = useDispatch();
+    const [open, setOpen] = React.useState(false);
+    const { alert } = useSelector((state) => state.auth);
 
-    const [formData, setFormData] = useState({ email: "", password: "", name: "" });
+    const validationSchema = Yup.object({
+        name: isRegister
+            ? Yup.string().required('Name is required')
+            : Yup.string(),
+        email: Yup.string()
+            .email('Invalid email format')
+            .required('Email is required'),
+        password: Yup.string()
+            .min(6, 'Password must be at least 6 characters long')
+            .required('Password is required'),
+    });
 
-    const { login, register } = useUser();
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            email: '',
+            password: '',
+        },
+        validationSchema,
+        onSubmit: (values) => {
+            if (isRegister) {
+                dispatch(register(values));
+                setIsRegister(false)
+            } else {
+                dispatch(login({ email: values.email, password: values.password }))
+            }
+            formik.resetForm();
+        },
+    });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (isRegister) {
-            register(formData);
-        } else {
-            login({ email: formData.email, password: formData.password });
-        }
-        setFormData({ email: "", password: "", name: "" });
-    };
     return (
         <Dialog
             open={isOpen}
-            onClose={onClose}
+            onClose={() => {
+                onClose();
+                dispatch(clearAlert());
+            }}
             maxWidth="sm"
             fullWidth
             PaperProps={{
@@ -34,7 +62,6 @@ const Login = ({ isOpen, onClose }) => {
                 },
             }}
         >
-            {/* Header with Logo */}
             <DialogTitle sx={{ textAlign: 'center', paddingBottom: 0 }}>
                 <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -43,15 +70,11 @@ const Login = ({ isOpen, onClose }) => {
                 >
                     <Typography
                         variant="h6"
-                        noWrap
                         sx={{
-                            mr: 2,
                             fontFamily: 'monospace',
                             fontWeight: 700,
-                            letterSpacing: '.3rem',
                             color: '#FFF',
-                            textDecoration: 'none',
-                            fontSize: 40
+                            fontSize: 40,
                         }}
                     >
                         CNJ
@@ -68,7 +91,6 @@ const Login = ({ isOpen, onClose }) => {
             </DialogTitle>
 
             <DialogContent sx={{ paddingTop: '16px', minHeight: '450px' }}>
-                {/* Animated Image Section */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -76,52 +98,60 @@ const Login = ({ isOpen, onClose }) => {
                     className="mb-8"
                 >
                     <img
-                        src={welcomeImg} // Replace with your background image
+                        src={welcomeImg}
                         alt="Welcome"
                         className="rounded-lg max-h-20 mx-auto my-5 shadow-lg"
                     />
                 </motion.div>
 
-                {/* Login/Register Form */}
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.4 }}
                 >
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={formik.handleSubmit}>
                         {isRegister && (
                             <TextField
                                 label="Full Name"
-                                value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                name="name"
+                                value={formik.values.name}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 fullWidth
-                                sx={{ mt: 3, borderColor: '#FFFFFF', color: '#FFFFFF' }}
+                                error={formik.touched.name && Boolean(formik.errors.name)}
+                                helperText={formik.touched.name && formik.errors.name}
+                                sx={{ mt: 3 }}
                             />
                         )}
                         <TextField
                             label="Email"
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            name="email"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             fullWidth
-                            sx={{ mt: 3, borderColor: '#FFFFFF', color: '#FFFFFF' }}
+                            error={formik.touched.email && Boolean(formik.errors.email)}
+                            helperText={formik.touched.email && formik.errors.email}
+                            sx={{ mt: 3 }}
                         />
                         <TextField
                             label="Password"
+                            name="password"
                             type="password"
-                            value={formData.password}
-                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             fullWidth
-                            sx={{ mt: 3, borderColor: '#FFFFFF', color: '#FFFFFF' }}
-                        />
-                        <Button
+                            error={formik.touched.password && Boolean(formik.errors.password)}
+                            helperText={formik.touched.password && formik.errors.password}
                             sx={{ mt: 3 }}
-                            type="submit" fullWidth variant="contained">
-                            {isRegister ? "Register" : "Login"}
+                        />
+                        <Button sx={{ mt: 3 }} type="submit" fullWidth variant="contained">
+                            {isRegister ? 'Register' : 'Login'}
                         </Button>
                     </form>
                 </motion.div>
 
-                {/* Toggle Login/Register */}
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -137,6 +167,11 @@ const Login = ({ isOpen, onClose }) => {
                             {isRegister ? 'Login' : 'Register'}
                         </span>
                     </p>
+                    {alert && (
+                        <Typography color={alert.type === 'error' ? 'error' : 'primary'}>
+                            {alert.message}
+                        </Typography>
+                    )}
                 </motion.div>
             </DialogContent>
         </Dialog>

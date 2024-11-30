@@ -3,11 +3,11 @@ import { Box, Typography, Button, Grid, Card, CardContent, Breadcrumbs, Link, Ra
 import { Home as HomeIcon } from '@mui/icons-material';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useLocation } from 'react-router-dom';
-import { useUser } from '../../context/UserContext';
-
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../app/features/cartSlice';
 
 const ProductPage = () => {
-    const { addToCart } = useUser();
+    const dispatch = useDispatch();
     const location = useLocation();
     const product = location.state.product;
 
@@ -41,27 +41,26 @@ const ProductPage = () => {
 
             <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
-                    <div className='flex md:flex-row gap-3 flex-col'>
-                        <div className='md:w-2/3 flex items-center'>
+                    <div className="flex md:flex-row gap-3 flex-col">
+                        <div className="md:w-2/3 flex items-center">
                             <img
                                 src={product.image_url[0]}
-                                alt=''
-                                className='w-full h-auto rounded-lg'
+                                alt=""
+                                className="w-full h-auto rounded-lg"
                             />
                         </div>
-                        <div className='md:w-1/3 flex md:flex-col md:gap-0 gap-3 flex-row justify-between  '>
+                        <div className="md:w-1/3 flex md:flex-col md:gap-0 gap-3 flex-row justify-between">
                             {product.image_url.slice(1, 5).map((img, index) => (
                                 <img
                                     key={index}
                                     src={img}
                                     alt={`Thumbnail ${index + 1}`}
-                                    className='w-28 h-28   rounded-md'
+                                    className="w-28 h-28 rounded-md"
                                 />
                             ))}
                         </div>
                     </div>
                 </Grid>
-
 
                 {/* Right Section: Product Details */}
                 <Grid item xs={12} md={6} sx={{ height: '100%' }}>
@@ -73,7 +72,7 @@ const ProductPage = () => {
                             <Typography variant="body1" color="textSecondary" sx={{ my: 2, color: '#fff0ff' }}>
                                 {product.description}
                             </Typography>
-                            <Typography variant="h6" color="primary" sx={{ mb: 2, fontWeight: 'bold', }}>
+                            <Typography variant="h6" color="primary" sx={{ mb: 2, fontWeight: 'bold' }}>
                                 ${product.price.toFixed(2)}
                             </Typography>
                             <Typography sx={{ mb: 1, color: '#FFFFFF' }} variant="body2" color="textSecondary">
@@ -102,14 +101,19 @@ const ProductPage = () => {
                                     {product.reviews.length} Reviews
                                 </Typography>
                             </Box>
-                            <Button onClick={() => addToCart(product)} sx={{ py: 2, bgcolor: 'ButtonFace' }} variant="outlined" color="error" fullWidth>
+                            <Button
+                                onClick={() => dispatch(addToCart(product))}
+                                sx={{ py: 2, bgcolor: 'ButtonFace' }}
+                                variant="outlined"
+                                color="error"
+                                fullWidth
+                            >
                                 Add to Cart
                             </Button>
                         </CardContent>
                     </Card>
                 </Grid>
             </Grid>
-
 
             {/* Product Features */}
             <Box sx={{ mb: 4, display: 'flex', gap: 10 }}>
@@ -131,14 +135,9 @@ const ProductPage = () => {
                         <Grid item xs={12} sm={6} key={index}>
                             <Card sx={{ backgroundColor: '#ffffff', color: '#E0E0E0' }}>
                                 <CardContent>
-                                    <Rating
-                                        name="product-rating"
-                                        value={product.ratings}
-                                        readOnly
-                                    // size="large"
-                                    />
+                                    <Rating name="product-rating" value={rev.rating} readOnly />
                                     <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
-                                        {rev.comment}
+                                        {rev.review}
                                     </Typography>
                                     <Typography variant="caption" color="textSecondary" sx={{ mt: 1 }}>
                                         {rev.date}
@@ -154,10 +153,9 @@ const ProductPage = () => {
                 <Typography variant="h6" sx={{ mb: 2, color: '#FFFFFF' }}>
                     Add Your Review
                 </Typography>
-                <Box component="form" >
+                <Box component="form">
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
-
                             <Rating
                                 name="user-rating"
                                 value={rating}
@@ -174,25 +172,18 @@ const ProductPage = () => {
                                 value={review}
                                 onChange={(e) => setReview(e.target.value)}
                                 variant="outlined"
-                                sx={{ backgroundColor: '#DDD33333', }}
+                                sx={{ backgroundColor: '#DDD33333' }}
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={handleAddReview}
-                            // disabled={!review.trim() || rating === 0}
-                            >
+                            <Button variant="contained" color="primary" onClick={handleAddReview}>
                                 Submit Review
                             </Button>
                         </Grid>
                     </Grid>
                 </Box>
             </Box>
-
-
-        </div >
+        </div>
     );
 };
 

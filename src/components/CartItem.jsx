@@ -1,10 +1,11 @@
 import React from "react";
 import { Box, Typography, IconButton } from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
-import { useUser } from "../context/UserContext";
+import { useDispatch } from "react-redux";
+import { addToCart, removeFromCart } from "../app/features/cartSlice";
 
 const CartItem = ({ item }) => {
-    const { addToCart, removeFromCart } = useUser();
+    const dispatch = useDispatch();
 
     return (
         <Box
@@ -33,11 +34,11 @@ const CartItem = ({ item }) => {
 
             {/* Quantity Management */}
             <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <IconButton onClick={() => removeFromCart(item.id)}>
+                <IconButton onClick={() => dispatch(removeFromCart(item.id))}>
                     <Remove />
                 </IconButton>
                 <Typography>{item.quantity}</Typography>
-                <IconButton onClick={() => addToCart(item)}>
+                <IconButton onClick={() => dispatch(addToCart(item))}>
                     <Add />
                 </IconButton>
             </Box>
