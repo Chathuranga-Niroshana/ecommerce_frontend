@@ -19,3 +19,10 @@ or type
     email: "john@example.com", 
     password: "123456" 
 as this and you will be able to log in to the system.
+
+login will be open in a Dialog.
+
+In product page you can add a review and rate item.
+
+in Popular products displayed the products that has rating 4.6 or more
+new products are the products that has product year as 2024.
