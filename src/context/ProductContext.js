@@ -16,7 +16,7 @@ export const ProductProvider = ({ children }) => {
         const filteredPopularProducts = productList.filter(product => product.ratings >= 4.6)
         setNewProducts(filteredNewProducts);
         setPopularProducts(filteredPopularProducts)
-    }, [productList])
+    }, [])
 
     return (
         <ProductContext.Provider value={{ allProducts, newProducts, popularProducts, banners }}>
