@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const LOCAL_STORAGE_TOKEN_KEY = "token"
 const LOCAL_STORAGE_CART_KEY = "cartItems"
 
-const userDb = []
+const userDb = [
+    { id: 1, name: "John Doe", email: "john@example.com", password: "123456" }
+]
 const initialState = {
     user: null,
     isLoggedIn: !!localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY),

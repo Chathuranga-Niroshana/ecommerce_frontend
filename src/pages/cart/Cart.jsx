@@ -19,7 +19,7 @@ const Cart = () => {
                     {cart.map((item, index) => (
                         <CartItem key={index} item={item} />
                     ))}
-                    <Box sx={{ textAlign: "right", marginTop: "20px" }}>
+                    <Box sx={{ marginTop: "20px" }}>
                         <Typography variant="h6">Total: ${total}</Typography>
                         <Button
                             variant="contained"

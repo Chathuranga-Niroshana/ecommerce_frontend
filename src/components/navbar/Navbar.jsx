@@ -11,7 +11,6 @@ import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, useNavigate } from 'react-router-dom';
 import Login from '../../pages/auth/Login';
@@ -21,14 +20,13 @@ import { logout, getUser, getIsLoggedIn, } from '../../app/features/authSlice';
 
 const pages = [
     { label: 'Shop', path: '/shop' },
-    { label: 'About', path: '#' },
-    { label: 'Contact', path: '#' },
+    { label: 'About', },
+    { label: 'Contact', },
 ];
 
 function Navbar() {
     const [isLoginOpen, setIsLoginOpen] = React.useState(false);
     const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -38,7 +36,6 @@ function Navbar() {
     const isLoggedIn = useSelector(getIsLoggedIn);
 
     const handleNavMenu = (event) => setAnchorElNav(event?.currentTarget || null);
-    const handleUserMenu = (event) => setAnchorElUser(event?.currentTarget || null);
 
     const handleLogout = () => {
         dispatch(logout());
@@ -115,25 +112,13 @@ function Navbar() {
 
                     {/* User */}
                     {isLoggedIn ? (
-                        <Box>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={(e) => handleUserMenu(e)} sx={{ p: 0 }}>
-                                    <Avatar>{avatarFallback}</Avatar>
-                                </IconButton>
-                            </Tooltip>
-                            <Menu
-                                anchorEl={anchorElUser}
-                                open={Boolean(anchorElUser)}
-                                onClose={() => handleUserMenu(null)}
-                                sx={{ mt: '45px' }}
-                            >
-                                <MenuItem onClick={() => handleUserMenu(null)}>
-                                    <Typography textAlign="center">{user?.name}</Typography>
-                                </MenuItem>
-                                <MenuItem onClick={handleLogout}>
-                                    <Typography textAlign="center">Logout</Typography>
-                                </MenuItem>
-                            </Menu>
+                        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center', ml: 1 }} >
+
+                            <IconButton sx={{ p: 0 }}>
+                                <Avatar>{avatarFallback}</Avatar>
+                            </IconButton>
+                            <Typography textAlign="center">{user?.name}</Typography>
+                            <Button color="inherit" onClick={handleLogout} >Logout</Button>
                         </Box>
                     ) : (
                         <Button color="inherit" onClick={() => setIsLoginOpen(true)}>
@@ -143,7 +128,7 @@ function Navbar() {
                 </Toolbar>
             </Container>
             <Login isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
-        </AppBar>
+        </AppBar >
     );
 }
 export default Navbar;

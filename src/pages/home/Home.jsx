@@ -112,7 +112,7 @@ const Home = () => {
                     </motion.div>
                 </div>
 
-                {/* Features Section */}
+                {/*  Section */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}

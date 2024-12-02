@@ -7,16 +7,21 @@ import { BrowserRouter } from 'react-router-dom';
 import { ProductProvider } from './context/ProductContext';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
+import { SnackbarProvider, } from 'notistack';
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ProductProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </ProductProvider>
+      <SnackbarProvider maxSnack={3}>
+        <ProductProvider>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </ProductProvider>
+      </SnackbarProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

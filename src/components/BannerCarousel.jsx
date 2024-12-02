@@ -23,7 +23,7 @@ const BannerCarousel = () => {
             dynamicHeight
         >
             {banners.map((banner) => (
-                <img className=' rounded-3xl max-h-80' key={banner.id} src={banner.image} alt="banner" />
+                <img className=' rounded-sm md:rounded-3xl h-32 md:h-80 md:max-h-80' key={banner.id} src={banner.image} alt="banner" />
             ))}
         </Carousel>
     )

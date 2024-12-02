@@ -1,19 +1,44 @@
-import React, { useState } from 'react';
-import { Box, Typography, Button, Grid, Card, CardContent, Breadcrumbs, Link, Rating, TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import {
+    Box,
+    Typography,
+    Button,
+    Grid,
+    Card,
+    CardContent,
+    Breadcrumbs,
+    Link,
+    Rating,
+    TextField,
+} from '@mui/material';
 import { Home as HomeIcon } from '@mui/icons-material';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { addToCart } from '../../app/features/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, clearAlert } from '../../app/features/cartSlice';
+import { useSnackbar } from 'notistack';
+
 
 const ProductPage = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const product = location.state.product;
+    const { enqueueSnackbar } = useSnackbar();
 
     const [review, setReview] = useState('');
     const [rating, setRating] = useState(0);
     const [reviews, setReviews] = useState(product.reviews || []);
+    const alert = useSelector((state) => state.cart.alert);
+
+    useEffect(() => {
+        if (alert) {
+            enqueueSnackbar(alert.message, { variant: alert.type });
+            dispatch(clearAlert());
+        }
+    }, [alert, enqueueSnackbar, dispatch]);
+
+    const handleClick = () => {
+        dispatch(addToCart(product))
+    };
 
     const handleAddReview = () => {
         if (review.trim() && rating > 0) {
@@ -24,89 +49,98 @@ const ProductPage = () => {
         }
     };
 
+
+
+
+
     return (
-        <div className="container px-10" style={{ color: '#E0E0E0', minHeight: '100vh' }}>
+        <Box sx={{ px: { xs: 2, md: 10 }, py: 1, minHeight: '100vh', color: '#E0E0E0' }}>
             {/* Breadcrumbs Section */}
-            <Box sx={{ my: 2 }}>
+            <Box sx={{ mb: 2 }}>
                 <Breadcrumbs aria-label="breadcrumb" sx={{ color: '#BDBDBD' }}>
-                    <Link color="inherit" href="/" sx={{ color: '#BDBDBD' }}>
-                        <HomeIcon />
+                    <Link href="/" sx={{ color: '#BDBDBD', display: 'flex', alignItems: 'center' }}>
+                        <HomeIcon sx={{ mr: 0.5 }} fontSize="small" />
+                        Home
                     </Link>
-                    <Link color="inherit" href="/shop" sx={{ color: '#BDBDBD' }}>
+                    <Link href="/shop" sx={{ color: '#BDBDBD' }}>
                         Shop
                     </Link>
                     <Typography sx={{ color: '#BDBDBD' }}>{product.name}</Typography>
                 </Breadcrumbs>
             </Box>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={4}>
+                {/* Left Section: Images */}
                 <Grid item xs={12} md={6}>
-                    <div className="flex md:flex-row gap-3 flex-col">
-                        <div className="md:w-2/3 flex items-center">
+                    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 2 }}>
+                        <Box sx={{ flex: 2 }}>
                             <img
                                 src={product.image_url[0]}
-                                alt=""
+                                alt="Main Product"
                                 className="w-full h-auto rounded-lg"
                             />
-                        </div>
-                        <div className="md:w-1/3 flex md:flex-col md:gap-0 gap-3 flex-row justify-between">
-                            {product.image_url.slice(1, 5).map((img, index) => (
+                        </Box>
+                        <Box
+                            sx={{
+                                flex: 1,
+                                display: 'flex',
+                                flexDirection: { xs: 'row', md: 'column' },
+                                gap: 2,
+                                overflowX: 'auto',
+                            }}
+                        >
+                            {product.image_url.slice(1, 6).map((img, index) => (
                                 <img
                                     key={index}
                                     src={img}
                                     alt={`Thumbnail ${index + 1}`}
-                                    className="w-28 h-28 rounded-md"
+                                    style={{
+                                        width: '100%',
+                                        height: 'auto',
+                                        maxWidth: '75px',
+                                        borderRadius: '8px',
+                                    }}
                                 />
                             ))}
-                        </div>
-                    </div>
+                        </Box>
+                    </Box>
                 </Grid>
 
                 {/* Right Section: Product Details */}
-                <Grid item xs={12} md={6} sx={{ height: '100%' }}>
-                    <Card sx={{ backgroundColor: '#33333333', color: '#E0E0E0' }}>
+                <Grid item xs={12} md={6}>
+                    <Card sx={{ bgcolor: '#333333', color: '#E0E0E0', p: 2 }}>
                         <CardContent>
-                            <Typography variant="h5" component="h1" sx={{ fontWeight: 'bold', color: '#FFFFFF' }}>
+                            <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#FFFFFF' }}>
                                 {product.name}
                             </Typography>
-                            <Typography variant="body1" color="textSecondary" sx={{ my: 2, color: '#fff0ff' }}>
+                            <Typography variant="body1" sx={{ my: 2, color: '#FFFFFF99' }}>
                                 {product.description}
                             </Typography>
-                            <Typography variant="h6" color="primary" sx={{ mb: 2, fontWeight: 'bold' }}>
+                            <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold', color: '#FF6347' }}>
                                 ${product.price.toFixed(2)}
                             </Typography>
-                            <Typography sx={{ mb: 1, color: '#FFFFFF' }} variant="body2" color="textSecondary">
-                                <strong>Display:</strong> {product.specifications.display}
-                            </Typography>
-                            <Typography sx={{ mb: 1, color: '#FFFFFF' }} variant="body2" color="textSecondary">
-                                <strong>Processor:</strong> {product.specifications.processor}
-                            </Typography>
-                            <Typography sx={{ mb: 1, color: '#FFFFFF' }} variant="body2" color="textSecondary">
-                                <strong>Storage:</strong> {product.specifications.storage}
-                            </Typography>
-                            <Typography sx={{ mb: 1, color: '#FFFFFF' }} variant="body2" color="textSecondary">
-                                <strong>RAM:</strong> {product.specifications.ram}
-                            </Typography>
-                            <Typography sx={{ mb: 1, color: '#FFFFFF' }} variant="body2" color="textSecondary">
-                                <strong>Battery:</strong> {product.specifications.battery}
-                            </Typography>
+                            {['display', 'processor', 'storage', 'ram', 'battery'].map((spec) => (
+                                <Typography
+                                    key={spec}
+                                    variant="body2"
+                                    sx={{ color: '#FFFFFF', mb: 1 }}
+                                >
+                                    <strong>{`${spec.charAt(0).toUpperCase() + spec.slice(1)}:`}</strong>{' '}
+                                    {product.specifications[spec]}
+                                </Typography>
+                            ))}
                             <Box sx={{ mb: 2 }}>
-                                <Rating
-                                    name="product-rating"
-                                    value={product.ratings}
-                                    readOnly
-                                    size="large"
-                                />
-                                <Typography sx={{ color: '#E0E0E0' }} variant="body2" color="textSecondary">
+                                <Rating value={product.ratings} readOnly size="large" />
+                                <Typography sx={{ color: '#E0E0E0', mt: 1 }} variant="body2">
                                     {product.reviews.length} Reviews
                                 </Typography>
                             </Box>
                             <Button
-                                onClick={() => dispatch(addToCart(product))}
-                                sx={{ py: 2, bgcolor: 'ButtonFace' }}
-                                variant="outlined"
-                                color="error"
+                                onClick={() => handleClick()}
+                                variant="contained"
+                                color="primary"
                                 fullWidth
+                                sx={{ py: 1.5 }}
                             >
                                 Add to Cart
                             </Button>
@@ -116,30 +150,31 @@ const ProductPage = () => {
             </Grid>
 
             {/* Product Features */}
-            <Box sx={{ mb: 4, display: 'flex', gap: 10 }}>
-                <Typography sx={{ mb: 2, color: '#FFFFFF' }} variant="body2" color="textSecondary">
-                    Warranty: {product.warranty}
+            <Box sx={{ mt: 4, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Typography sx={{ color: '#FFFFFF' }}>
+                    <strong>Warranty:</strong> {product.warranty}
                 </Typography>
-                <Typography sx={{ mb: 2, color: '#FFFFFF' }} variant="body2" color="textSecondary">
-                    Shipping Details: {product.shipping_details.delivery_time} - ${product.shipping_details.shipping_cost} shipping cost
+                <Typography sx={{ color: '#FFFFFF' }}>
+                    <strong>Shipping:</strong> {product.shipping_details.delivery_time} - $
+                    {product.shipping_details.shipping_cost}
                 </Typography>
             </Box>
 
             {/* Reviews Section */}
-            <Box sx={{ my: 6 }}>
-                <Typography variant="h6" component="h2" sx={{ mb: 2, color: '#FFFFFF' }}>
+            <Box sx={{ mt: 6 }}>
+                <Typography variant="h6" sx={{ mb: 2, color: '#FFFFFF' }}>
                     Reviews
                 </Typography>
                 <Grid container spacing={3}>
                     {reviews.map((rev, index) => (
                         <Grid item xs={12} sm={6} key={index}>
-                            <Card sx={{ backgroundColor: '#ffffff', color: '#E0E0E0' }}>
+                            <Card sx={{ bgcolor: '#424242', color: '#FFFFFF' }}>
                                 <CardContent>
-                                    <Rating name="product-rating" value={rev.rating} readOnly />
-                                    <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
+                                    <Rating value={rev.rating} readOnly />
+                                    <Typography variant="body2" sx={{ mt: 1 }}>
                                         {rev.review}
                                     </Typography>
-                                    <Typography variant="caption" color="textSecondary" sx={{ mt: 1 }}>
+                                    <Typography variant="caption" sx={{ color: '#BDBDBD', mt: 1 }}>
                                         {rev.date}
                                     </Typography>
                                 </CardContent>
@@ -149,41 +184,44 @@ const ProductPage = () => {
                 </Grid>
             </Box>
 
-            <Box sx={{ my: 4, backgroundColor: '#42424233', p: 2 }}>
+            {/* Add Review */}
+            <Box sx={{ mt: 6, p: 3, bgcolor: '#42424233', borderRadius: 2 }}>
                 <Typography variant="h6" sx={{ mb: 2, color: '#FFFFFF' }}>
                     Add Your Review
                 </Typography>
-                <Box component="form">
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                            <Rating
-                                name="user-rating"
-                                value={rating}
-                                onChange={(e, newValue) => setRating(newValue)}
-                                size="large"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                label="Write a review"
-                                multiline
-                                rows={4}
-                                value={review}
-                                onChange={(e) => setReview(e.target.value)}
-                                variant="outlined"
-                                sx={{ backgroundColor: '#DDD33333' }}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Button variant="contained" color="primary" onClick={handleAddReview}>
-                                Submit Review
-                            </Button>
-                        </Grid>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                        <Rating
+                            value={rating}
+                            onChange={(e, newValue) => setRating(newValue)}
+                            size="large"
+                        />
                     </Grid>
-                </Box>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Write a review"
+                            multiline
+                            rows={4}
+                            value={review}
+                            onChange={(e) => setReview(e.target.value)}
+                            variant="outlined"
+                            sx={{ bgcolor: '#FFFFFF', borderRadius: 1 }}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleAddReview}
+                            fullWidth
+                        >
+                            Submit Review
+                        </Button>
+                    </Grid>
+                </Grid>
             </Box>
-        </div>
+        </Box>
     );
 };
 

@@ -21,6 +21,10 @@ const cartSlice = createSlice({
         },
         addToCart: (state, action) => {
             const product = action.payload
+            if (!state.isLoggedIn) {
+                state.alert = { type: "error", message: "You must be logged in to add products to your cart" }
+                return
+            }
             const existingItem = state.cart.find((item) => item.id === product.id)
 
             if (existingItem) {

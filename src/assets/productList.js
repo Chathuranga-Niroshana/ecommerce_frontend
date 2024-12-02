@@ -27,9 +27,10 @@ export const productList = [
             "https://m.media-amazon.com/images/I/61VuVU94RnL.jpg",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
+            "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080",
             "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080"
         ],
-        category: "mobile phone",
+        category: "accessories",
         description: `Apple iPhone 13 with A15 Bionic chip and advanced dual-camera system.this was the best year of iphone i say. you want a midranger: get the regular 13, want a budget: get the 13 mini, want a flagship: get the 13 pro, want a big flagship: get the 13 pro max. reliable phones with good specs`,
         condition: "Brand New",
         brand: "Apple",
@@ -64,9 +65,10 @@ export const productList = [
             "https://m.media-amazon.com/images/I/61VuVU94RnL.jpg",
             "https://appleasia.lk/wp-content/uploads/2024/09/iPhone-13-All-Colours-%EF%A3%BF2.jpg",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
+            "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080",
             "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080"
         ],
-        category: "mobile phone",
+        category: "accessories",
         description: "Samsung Galaxy S22 with dynamic AMOLED display and pro-grade camera.",
         condition: "Brand New",
         brand: "Samsung",
@@ -101,6 +103,7 @@ export const productList = [
             "https://appleasia.lk/wp-content/uploads/2024/09/iPhone-13-All-Colours-%EF%A3%BF2.jpg",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
+            "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080",
             "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080"
         ],
         category: "computers",
@@ -138,6 +141,7 @@ export const productList = [
             "https://m.media-amazon.com/images/I/61VuVU94RnL.jpg",
             "https://appleasia.lk/wp-content/uploads/2024/09/iPhone-13-All-Colours-%EF%A3%BF2.jpg",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
+            "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080",
             "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080"
         ],
         category: "accessories",
@@ -190,9 +194,10 @@ export const productList = [
             "https://m.media-amazon.com/images/I/61VuVU94RnL.jpg",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
+            "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080",
             "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080"
         ],
-        category: "mobile phone",
+        category: "accessories",
         description: "Apple iPhone 13 with A15 Bionic chip and advanced dual-camera system.",
         condition: "Brand New",
         brand: "Apple",
@@ -227,6 +232,7 @@ export const productList = [
             "https://m.media-amazon.com/images/I/61VuVU94RnL.jpg",
             "https://appleasia.lk/wp-content/uploads/2024/09/iPhone-13-All-Colours-%EF%A3%BF2.jpg",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
+            "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080",
             "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080"
         ],
         category: "mobile phone",
@@ -264,6 +270,7 @@ export const productList = [
             "https://appleasia.lk/wp-content/uploads/2024/09/iPhone-13-All-Colours-%EF%A3%BF2.jpg",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
+            "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080",
             "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080"
         ],
         category: "computers",
@@ -301,6 +308,7 @@ export const productList = [
             "https://m.media-amazon.com/images/I/61VuVU94RnL.jpg",
             "https://appleasia.lk/wp-content/uploads/2024/09/iPhone-13-All-Colours-%EF%A3%BF2.jpg",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
+            "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080",
             "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080"
         ],
         category: "accessories",
@@ -353,6 +361,7 @@ export const productList = [
             "https://m.media-amazon.com/images/I/61VuVU94RnL.jpg",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
+            "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080",
             "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080"
         ],
         category: "mobile phone",
@@ -390,6 +399,7 @@ export const productList = [
             "https://m.media-amazon.com/images/I/61VuVU94RnL.jpg",
             "https://appleasia.lk/wp-content/uploads/2024/09/iPhone-13-All-Colours-%EF%A3%BF2.jpg",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
+            "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080",
             "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080"
         ],
         category: "mobile phone",
@@ -427,6 +437,7 @@ export const productList = [
             "https://appleasia.lk/wp-content/uploads/2024/09/iPhone-13-All-Colours-%EF%A3%BF2.jpg",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
+            "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080",
             "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080"
         ],
         category: "computers",
@@ -464,6 +475,7 @@ export const productList = [
             "https://m.media-amazon.com/images/I/61VuVU94RnL.jpg",
             "https://appleasia.lk/wp-content/uploads/2024/09/iPhone-13-All-Colours-%EF%A3%BF2.jpg",
             "https://cdn.shopify.com/s/files/1/0643/1571/9930/files/Apple_iPhone_13_Pro_Graphite_1.jpg?v=1690317122",
+            "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080",
             "https://shopjrtechtt.com/cdn/shop/products/iphone-13-pro-881700.png?v=1665780020&width=1080"
         ],
         category: "accessories",
