@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
-import { Alert, Button, Dialog, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Button, Dialog, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import welcomeImg from '../../assets/images/welcomeImg.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { register, login, clearAlert } from '../../app/features/authSlice';
-import Snackbar from '@mui/material/Snackbar';
+import { useSnackbar } from 'notistack';
 
 
 const Login = ({ isOpen, onClose }) => {
     const [isRegister, setIsRegister] = useState(false);
     const dispatch = useDispatch();
-    const [open, setOpen] = React.useState(false);
     const { alert } = useSelector((state) => state.auth);
+    const { enqueueSnackbar } = useSnackbar();
+
+    useEffect(() => {
+        if (alert) {
+            enqueueSnackbar(alert.message, { variant: alert.type });
+            if (alert.type === 'success' && alert.message === "Logged in successfully.") {
+                onClose();
+                window.location.reload()
+            }
+            dispatch(clearAlert());
+        }
+    }, [alert, dispatch, enqueueSnackbar, onClose, isRegister]);
 
     const validationSchema = Yup.object({
         name: isRegister
@@ -40,6 +51,7 @@ const Login = ({ isOpen, onClose }) => {
                 setIsRegister(false)
             } else {
                 dispatch(login({ email: values.email, password: values.password }))
+
             }
             formik.resetForm();
         },
@@ -71,7 +83,6 @@ const Login = ({ isOpen, onClose }) => {
                     <Typography
                         variant="h6"
                         sx={{
-                            fontFamily: 'monospace',
                             fontWeight: 700,
                             color: '#FFF',
                             fontSize: 40,
@@ -120,7 +131,7 @@ const Login = ({ isOpen, onClose }) => {
                                 fullWidth
                                 error={formik.touched.name && Boolean(formik.errors.name)}
                                 helperText={formik.touched.name && formik.errors.name}
-                                sx={{ mt: 3 }}
+                                sx={{ mt: 3, }}
                             />
                         )}
                         <TextField

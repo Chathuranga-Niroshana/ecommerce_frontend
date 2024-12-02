@@ -15,36 +15,84 @@ const CartItem = ({ item }) => {
                 justifyContent: "space-between",
                 padding: "10px",
                 borderBottom: "1px solid #ddd",
+                flexWrap: { xs: "wrap", sm: "nowrap" },
             }}
         >
-            {/* Item Details */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "15px",
+                    width: { xs: "100%", sm: "auto" },
+                    marginBottom: { xs: "10px", sm: "0" },
+                }}
+            >
                 <img
                     src={item.image_url[0]}
                     alt={item.name}
-                    style={{ width: "80px", height: "80px", objectFit: "cover" }}
+                    style={{
+                        width: "80px",
+                        height: "80px",
+                        objectFit: "cover",
+                        borderRadius: "8px",
+                    }}
                 />
                 <Box>
-                    <Typography variant="subtitle1">{item.name}</Typography>
-                    <Typography variant="subtitle2" color="textSecondary">
-                        ${item.price} each
+                    <Typography variant="subtitle1" noWrap>
+                        {item.name}
+                    </Typography>
+                    <Typography
+                        variant="subtitle2"
+                        sx={{
+                            fontSize: { xs: "12px", sm: "14px" },
+                            color: '#efefef'
+                        }}
+                    >
+                        ${item.price.toFixed(2)}
                     </Typography>
                 </Box>
             </Box>
-
-            {/* Quantity Management */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <IconButton onClick={() => dispatch(removeFromCart(item.id))}>
-                    <Remove />
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    width: { xs: "100%", sm: "auto" },
+                    justifyContent: { xs: "space-between", sm: "flex-start" },
+                }}
+            >
+                <IconButton
+                    onClick={() => dispatch(removeFromCart(item.id))}
+                    size="small"
+                >
+                    <Remove sx={{ color: '#dedede' }} />
                 </IconButton>
-                <Typography>{item.quantity}</Typography>
-                <IconButton onClick={() => dispatch(addToCart(item))}>
-                    <Add />
+                <Typography
+                    sx={{
+                        fontSize: { xs: "14px", sm: "16px" },
+                        textAlign: "center",
+                    }}
+                >
+                    {item.quantity}
+                </Typography>
+                <IconButton
+                    onClick={() => dispatch(addToCart(item))}
+                    size="small"
+                >
+                    <Add sx={{ color: '#dedede' }} />
                 </IconButton>
             </Box>
 
-            {/* Total Price */}
-            <Typography>${item.price * item.quantity}</Typography>
+            <Typography
+                sx={{
+                    fontSize: { xs: "14px", sm: "16px" },
+                    textAlign: "right",
+                    width: { xs: "100%", sm: "auto" },
+                    marginTop: { xs: "10px", sm: "0" },
+                }}
+            >
+                ${(item.price * item.quantity).toFixed(2)}
+            </Typography>
         </Box>
     );
 };

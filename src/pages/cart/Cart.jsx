@@ -20,7 +20,7 @@ const Cart = () => {
                         <CartItem key={index} item={item} />
                     ))}
                     <Box sx={{ marginTop: "20px" }}>
-                        <Typography variant="h6">Total: ${total}</Typography>
+                        <Typography variant="h6">Total: ${total.toFixed(2)}</Typography>
                         <Button
                             variant="contained"
                             color="error"

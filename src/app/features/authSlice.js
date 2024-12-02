@@ -39,7 +39,6 @@ const authSlice = createSlice({
             const { email, password } = action.payload
 
             if (!email || !password) {
-                state.alert = { type: "error", message: "Please fill all the fields." }
                 return
             }
 

@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link, useNavigate } from 'react-router-dom';
 import Login from '../../pages/auth/Login';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectTotalCartItems, } from '../../app/features/cartSlice';
+import { clearCart, selectTotalCartItems, } from '../../app/features/cartSlice';
 import { logout, getUser, getIsLoggedIn, } from '../../app/features/authSlice';
 
 const pages = [
@@ -39,6 +39,7 @@ function Navbar() {
 
     const handleLogout = () => {
         dispatch(logout());
+        dispatch(clearCart());
         navigate('/');
     };
 
@@ -54,7 +55,6 @@ function Navbar() {
                             noWrap
                             sx={{
                                 mr: 2,
-                                display: { xs: 'none', md: 'flex' },
                                 fontFamily: 'monospace',
                                 fontWeight: 700,
                                 letterSpacing: '.3rem',
