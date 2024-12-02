@@ -24,9 +24,19 @@ const ProductPage = () => {
     const product = location.state.product;
     const { enqueueSnackbar } = useSnackbar();
 
-    const [review, setReview] = useState('');
-    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState('');
+    const [rate, setRate] = useState(0);
     const [reviews, setReviews] = useState(product.reviews || []);
+
+    const handleAddReview = () => {
+        if (comment.trim() && rate > 0) {
+            const newReview = { comment, rate, date: new Date().toLocaleString() };
+            setReviews([...reviews, newReview]);
+            setComment('');
+            setRate(0);
+        }
+    };
+
     const alert = useSelector((state) => state.cart.alert);
 
     useEffect(() => {
@@ -39,16 +49,6 @@ const ProductPage = () => {
     const handleClick = () => {
         dispatch(addToCart(product))
     };
-
-    const handleAddReview = () => {
-        if (review.trim() && rating > 0) {
-            const newReview = { review, rating, date: new Date().toLocaleString() };
-            setReviews([...reviews, newReview]);
-            setReview('');
-            setRating(0);
-        }
-    };
-
 
 
 
@@ -170,9 +170,9 @@ const ProductPage = () => {
                         <Grid item xs={12} sm={6} key={index}>
                             <Card sx={{ bgcolor: '#424242', color: '#FFFFFF' }}>
                                 <CardContent>
-                                    <Rating value={rev.rating} readOnly />
+                                    <Rating value={rev.rate} readOnly />
                                     <Typography variant="body2" sx={{ mt: 1 }}>
-                                        {rev.review}
+                                        {rev.comment}
                                     </Typography>
                                     <Typography variant="caption" sx={{ color: '#BDBDBD', mt: 1 }}>
                                         {rev.date}
@@ -192,8 +192,8 @@ const ProductPage = () => {
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <Rating
-                            value={rating}
-                            onChange={(e, newValue) => setRating(newValue)}
+                            value={rate}
+                            onChange={(e, newValue) => setRate(newValue)}
                             size="large"
                         />
                     </Grid>
@@ -203,8 +203,8 @@ const ProductPage = () => {
                             label="Write a review"
                             multiline
                             rows={4}
-                            value={review}
-                            onChange={(e) => setReview(e.target.value)}
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
                             variant="outlined"
                             sx={{ bgcolor: '#FFFFFF', borderRadius: 1 }}
                         />

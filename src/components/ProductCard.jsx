@@ -21,11 +21,11 @@ const ProductCard = ({ product }) => {
                 component="img"
                 src={product.image_url[0]}
                 alt={product.name}
-                className="w-full h- object-cover rounded-lg mb-4"
+                className="w-full  object-cover rounded-lg mb-4"
             />
             {/* Product Details */}
-            <Box>
-                <Typography variant="h6" className="truncate font-bold mb-2">
+            <Box >
+                <Typography variant="h6" className="truncate font-bold  mb-2">
                     {product.name}
                 </Typography>
                 <Box className="flex items-center gap-2 mb-2">
