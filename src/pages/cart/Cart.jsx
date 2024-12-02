@@ -29,6 +29,12 @@ const Cart = () => {
                         >
                             Clear Cart
                         </Button>
+                        <Button
+                            variant="contained"
+                            sx={{ marginLeft: "10px", marginTop: "10px", backgroundColor: 'blue', }}
+                        >
+                            Payment
+                        </Button>
                     </Box>
                 </>
             ) : (
